@@ -9,7 +9,7 @@ const Showcase = () => {
     if (!isTablet) {
       const timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: "#showcase",
+          trigger: "`#showcase`",
           start: "top top",
           end: "bottom top",
           scrub: true,
@@ -27,7 +27,10 @@ const Showcase = () => {
           ease: "power1.in",
         });
     }
-  }, [isTablet]);
+  }, {
+    dependencies: [isTablet],
+    revertOnUpdate: true,
+  });
   return (
     <section id="showcase">
       <div className="media">
