@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - develop  # <-- Added develop branch here
+      - develop  # Pushing to main or develop triggers deployment
 
   workflow_dispatch:
 
@@ -24,22 +24,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 1. Install pnpm first
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9  # Or your specific local pnpm version
+
+      # 2. Set up Node 22 with pnpm cache support
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: 22
+          cache: 'pnpm'
 
+      # 3. Install dependencies using pnpm
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
+      # 4. Build Vite project
       - name: Build project
-        run: npm run build
+        run: pnpm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload compiled dist folder
+      - name: Upload dist artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
