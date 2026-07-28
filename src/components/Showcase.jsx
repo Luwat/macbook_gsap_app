@@ -1,40 +1,79 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useMediaQuery } from "react-responsive";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef } from "react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Showcase = () => {
-  const isTablet = useMediaQuery({ query: "(max-width: 1024px)" });
+  const videoRef = useRef(null);
+
+  // Fallback handler strictly for autoplay restrictions or tab switching
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const playVideo = () => {
+      if (video.paused) {
+        video.play().catch(() => {});
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") playVideo();
+    };
+
+    playVideo();
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
+  }, []);
 
   useGSAP(() => {
-    if (!isTablet) {
+const mm = gsap.matchMedia();
+
+    // 1. DESKTOP ANIMATION (> 1024px)
+    mm.add("(min-width: 1025px)", () => {
       const timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: "`#showcase`",
+          trigger: "#showcase",
           start: "top top",
           end: "bottom top",
           scrub: true,
           pin: true,
+          anticipatePin: 1,
         },
       });
 
       timeline
-        .to(".mask img", {
-          transform: "scale(1.1)",
-        })
-        .to(".content", {
-          opacity: 1,
-          y: 0,
-          ease: "power1.in",
-        });
-    }
-  }, {
-    dependencies: [isTablet],
-    revertOnUpdate: true,
-  });
+        .to(".mask img", { scale: 1.1 })
+        .to(".content", { opacity: 1, y: 0, ease: "power1.in" });
+    });
+
+    // 2. MOBILE / TABLET RESET (<= 1024px)
+    // Strips away inline transformations when shrinking the viewport
+    mm.add("(max-width: 1024px)", () => {
+      gsap.set([".mask img", ".content"], {
+        clearProps: "all",
+      });
+    });
+
+    ScrollTrigger.refresh();
+
+    return () => mm.revert();
+  }, []);
+
   return (
     <section id="showcase">
       <div className="media">
-        <video src="/videos/game.mp4" loop muted autoPlay playsInline />
+        <video
+          ref={videoRef}
+          src="/videos/game.mp4"
+          loop
+          muted
+          autoPlay
+          playsInline
+          preload="auto"
+        />
         <div className="mask">
           <img src="/mask-logo.svg" alt="" />
         </div>
@@ -43,7 +82,6 @@ const Showcase = () => {
         <div className="wrapper">
           <div className="lg:max-w-md">
             <h2>Rocket chip.</h2>
-
             <div className="space-y-5 mt-7 pe-10">
               <p>
                 Introducing{" "}
