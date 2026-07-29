@@ -16,10 +16,10 @@ const Navbar = () => {
 
         <div className="flex-center gap-3">
           <button>
-            <img src={`${import.meta.env.BASE_URL}/search.svg`} alt="Search" />
+            <img src={`${import.meta.env.BASE_URL}search.svg`} alt="Search" />
           </button>
           <button>
-            <img src={`${import.meta.env.BASE_URL}/cart.svg`} alt="Cart" />
+            <img src={`${import.meta.env.BASE_URL}cart.svg`} alt="Cart" />
           </button>
         </div>
       </nav>

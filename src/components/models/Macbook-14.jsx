@@ -132,4 +132,4 @@ export default function MacBook14Model(props) {
   );
 }
 
-useGLTF.preload(`${import.meta.env.BASE_URL}/models/macbook-14-transformed.glb`);
+useGLTF.preload(`${import.meta.env.BASE_URL}models/macbook-14-transformed.glb`);
