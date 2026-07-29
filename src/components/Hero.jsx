@@ -11,9 +11,9 @@ const Hero = () => {
   return (
     <section id="hero">
       <h1>MacBook Pro</h1>
-      <img src="/title.png" alt="MacBook Pro title graphic" />
+      <img src={`${import.meta.env.BASE_URL}images/title.png`} alt="MacBook Pro title graphic" />
 
-      <video ref={videoRef} src="/videos/hero.mp4" autoPlay muted playsInline />
+      <video ref={videoRef} src={`${import.meta.env.BASE_URL}videos/hero.mp4`} autoPlay muted playsInline />
 
       <button>Buy</button>
 

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop  # Pushing to main or develop triggers deployment
 
   workflow_dispatch:
 
