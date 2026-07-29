@@ -65,7 +65,7 @@ const mm = gsap.matchMedia();
       <div className="media">
         <video
           ref={videoRef}
-          src="/videos/game.mp4"
+          src={`${import.meta.env.BASE_URL}videos/game.mp4`}
           loop
           muted
           autoPlay
@@ -73,7 +73,7 @@ const mm = gsap.matchMedia();
           preload="auto"
         />
         <div className="mask">
-          <img src="/mask-logo.svg" alt="" />
+          <img src={`${import.meta.env.BASE_URL}mask-logo.svg`} alt="" />
         </div>
       </div>
       <div className="content">

@@ -17,9 +17,9 @@ import { Color } from "three";
 export default function MacBook14Model(props) {
   const { color } = useMacBookStore();
   const { nodes, materials, scene } = useGLTF(
-    "/models/macbook-14-transformed.glb",
+    `${import.meta.env.BASE_URL}models/macbook-14-transformed.glb`,
   );
-  const texture = useTexture("/screen.png");
+  const texture = useTexture(`${import.meta.env.BASE_URL}screen.png`);
   useEffect(() => {
     scene.traverse((child) => {
       if (child.isMesh) {
@@ -132,4 +132,4 @@ export default function MacBook14Model(props) {
   );
 }
 
-useGLTF.preload("/models/macbook-14-transformed.glb");
+useGLTF.preload(`${import.meta.env.BASE_URL}/models/macbook-14-transformed.glb`);
