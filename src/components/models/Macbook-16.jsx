@@ -10,8 +10,8 @@ Title: macbook pro M3 16 inch 2024
 
 import { useGLTF, useTexture } from "@react-three/drei";
 import useMacBookStore from "../../store";
-import { Color } from "three";
-import { useEffect } from "react";
+import { Color, SRGBColorSpace } from "three";
+import { useEffect, useMemo } from "react";
 import { noChangeParts } from "../../constants";
 
 export default function MacBook16Model(props) {
@@ -20,6 +20,12 @@ export default function MacBook16Model(props) {
     `${import.meta.env.BASE_URL}models/macbook-16-transformed.glb`,
   );
   const texture = useTexture(`${import.meta.env.BASE_URL}screen.png`);
+  const screenTexture = useMemo(() => {
+    const nextTexture = texture.clone();
+    nextTexture.colorSpace = SRGBColorSpace;
+    nextTexture.needsUpdate = true;
+    return nextTexture;
+  }, [texture]);
 
   useEffect(() => {
     scene.traverse((child) => {
@@ -117,12 +123,8 @@ export default function MacBook16Model(props) {
         material={materials.JvMFZolVCdpPqjj}
         rotation={[Math.PI / 2, 0, 0]}
       />
-      <mesh
-        geometry={nodes.Object_123.geometry}
-        material={materials.sfCQkHOWyrsLmor}
-        rotation={[Math.PI / 2, 0, 0]}
-      >
-        <meshBasicMaterial map={texture} />
+      <mesh geometry={nodes.Object_123.geometry} rotation={[Math.PI / 2, 0, 0]}>
+        <meshBasicMaterial map={screenTexture} />
       </mesh>
       <mesh
         geometry={nodes.Object_127.geometry}

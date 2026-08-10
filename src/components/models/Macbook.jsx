@@ -9,11 +9,32 @@ Title: macbook pro M3 16 inch 2024
 */
 
 import { useGLTF, useTexture } from "@react-three/drei";
-
+import useMacBookStore from "../../store";
+import { Color, SRGBColorSpace } from "three";
+import { useEffect, useMemo } from "react";
+import { noChangeParts } from "../../constants";
 export function MacBookModel(props) {
-  const { nodes, materials } = useGLTF(`${import.meta.env.BASE_URL}models/macbook-transformed.glb`);
+  const { color } = useMacBookStore();
+  const { nodes, materials, scene } = useGLTF(
+    `${import.meta.env.BASE_URL}models/macbook-transformed.glb`,
+  );
   const texture = useTexture(`${import.meta.env.BASE_URL}screen.png`);
+  const screenTexture = useMemo(() => {
+    const nextTexture = texture.clone();
+    nextTexture.colorSpace = SRGBColorSpace;
+    nextTexture.needsUpdate = true;
+    return nextTexture;
+  }, [texture]);
 
+  useEffect(() => {
+    scene.traverse((child) => {
+      if (child.isMesh) {
+        if (!noChangeParts.includes(child.name)) {
+          child.material.color = new Color(color);
+        }
+      }
+    });
+  }, [color, scene]);
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -101,12 +122,8 @@ export function MacBookModel(props) {
         material={materials.JvMFZolVCdpPqjj}
         rotation={[Math.PI / 2, 0, 0]}
       />
-      <mesh
-        geometry={nodes.Object_123.geometry}
-        material={materials.sfCQkHOWyrsLmor}
-        rotation={[Math.PI / 2, 0, 0]}
-      >
-        <meshBasicMaterial map={texture} />
+      <mesh geometry={nodes.Object_123.geometry} rotation={[Math.PI / 2, 0, 0]}>
+        <meshBasicMaterial map={screenTexture} />
       </mesh>
       <mesh
         geometry={nodes.Object_127.geometry}
