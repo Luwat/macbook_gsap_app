@@ -27,50 +27,56 @@ const noChangeParts = [
 ];
 
 const performanceImages = [
-    { id: "p1", src: "/performance1.png" },
-    { id: "p2", src: "/performance2.png" },
-    { id: "p3", src: "/performance3.png" },
-    { id: "p4", src: "/performance4.png" },
-    { id: "p5", src: "/performance5.jpg" },
-    { id: "p6", src: "/performance6.png" },
-    { id: "p7", src: "/performance7.png" },
-];
+    { id: "p1", src: `${import.meta.env.BASE_URL}performance1.png` },
+    { id: "p2", src: `${import.meta.env.BASE_URL}performance2.png` },
+    { id: "p3", src: `${import.meta.env.BASE_URL}performance3.png` },
+    { id: "p4", src: `${import.meta.env.BASE_URL}performance4.png` },
+    { id: "p5", src: `${import.meta.env.BASE_URL}performance5.jpg` },
+    { id: "p6", src: `${import.meta.env.BASE_URL}performance6.png` },
+    { id: "p7", src: `${import.meta.env.BASE_URL}performance7.png` },];
 
 const performanceImgPositions = [
     {
         id: "p1",
-        left: 5,
-        bottom: 65,
+        left: "5%",
+        bottom: "65%",
+        transform: "translate3d(0,0,0)",
     },
     {
         id: "p2",
-        right: 10,
-        bottom: 60,
+        right: "10%",
+        bottom: "60%",
+        transform: "translate3d(0,0,0)",
     },
     {
         id: "p3",
-        right: -5,
-        bottom: 45,
+        right: "-5%",
+        bottom: "45%",
+        transform: "translate3d(0,0,0)",
     },
     {
         id: "p4",
-        right: -10,
-        bottom: 0,
+        right: "-10%",
+        bottom: "0%",
+        transform: "translate3d(0,0,0)",
     },
     {
         id: "p5",
-        left: 20,
-        bottom: 50,
+        left: "20%",
+        bottom: "50%",
+        transform: "translate3d(0,0,0)",
     },
     {
         id: "p6",
-        left: 2,
-        bottom: 30,
+        left: "2%",
+        bottom: "30%",
+        transform: "translate3d(0,0,0)",
     },
     {
         id: "p7",
-        left: -5,
-        bottom: 0,
+        left: "-5%",
+        bottom: "0%",
+        transform: "translate3d(0,0,0)",
     },
 ];
 
